@@ -27,6 +27,7 @@ func LoadConf() *ini.File {
 	} else {
 		Conf = _conf
 	}
+	Debug = Conf.Section("base").Key("debug").MustBool()
 	return Conf
 }
 
