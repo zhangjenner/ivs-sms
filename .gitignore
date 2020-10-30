@@ -1,5 +1,3 @@
 .vscode
 bin
 pkg
-!bin/.gitkeep
-!pkg/sumdb
