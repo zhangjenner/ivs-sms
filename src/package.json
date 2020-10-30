@@ -1,0 +1,40 @@
+{
+  "name": "ivs-sms",
+  "version": "0.1.0",
+  "description": "Open Source Media Server",
+  "scripts": {
+    "build:ico": "rsrc -arch amd64 -ico ed.ico -o mlbvc.syso",
+    "build:win": "go clean -cache -i ./vendor/github.com/penggy/EasyGoLib/buildtime && go build -tags release -ldflags \"-s -w\" -o mlbvc.exe",
+    "build:lin": "go clean -cache -i ./vendor/github.com/penggy/EasyGoLib/buildtime && go build -tags release -ldflags \"-s -w\" -o mlbvc",
+    "dev:win": "gobuild -o mlbvc.exe",
+    "dev:lin": "gobuild -o mlbvc",    
+    "clean": "rimraf mlbvc.exe mlbvc.exe~ mlbvc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "pack": [
+    {
+      "name": "win",
+      "format": "zip",
+      "pattern": "{ivs-sms.exe,*.ini,*.bat}",
+      "options": {
+        "dot": true,
+        "ignore": [
+          "*.log"
+        ]
+      }
+    },
+    {
+      "name": "lin",
+      "format": "tar",
+      "pattern": "{ivs-sms,.ini,*.sh}",
+      "options": {
+        "dot": true,
+        "ignore": [
+          "*.log"
+        ]
+      }
+    }
+  ]
+}
