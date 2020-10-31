@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "description": "Open Source Media Server",
   "scripts": {
-    "build:ico": "rsrc -arch amd64 -ico ed.ico -o mlbvc.syso",
-    "build:win": "go clean -cache -i ./vendor/github.com/penggy/EasyGoLib/buildtime && go build -tags release -ldflags \"-s -w\" -o mlbvc.exe",
-    "build:lin": "go clean -cache -i ./vendor/github.com/penggy/EasyGoLib/buildtime && go build -tags release -ldflags \"-s -w\" -o mlbvc",
-    "dev:win": "gobuild -o mlbvc.exe",
-    "dev:lin": "gobuild -o mlbvc",    
-    "clean": "rimraf mlbvc.exe mlbvc.exe~ mlbvc"
+    "build:ico": "rsrc -arch amd64 -ico ed.ico -o ivs-sms.syso",
+    "build:win": "go build -tags release -ldflags \"-s -w\" -o ivs-sms.exe",
+    "build:lin": "go build -tags release -ldflags \"-s -w\" -o ivs-sms",
+    "dev:win": "gobuild -o ivs-sms.exe",
+    "dev:lin": "gobuild -o ivs-sms",    
+    "clean": "rimraf ivs-sms.exe ivs-sms.exe~ ivs-sms"
   },
   "keywords": [],
   "author": "",

@@ -41,7 +41,7 @@ func (recorder *Recorder) Start() {
 	if _, err := os.Stat(recorder.SaveDir); os.IsNotExist(err) {
 		err = os.MkdirAll(recorder.SaveDir, 0755)
 		if err != nil {
-			log.Printf("EnsureDir:[%s] err:%v.", recorder.SaveDir, err)
+			log.Printf("MkdirAll:[%s] err:%v.", recorder.SaveDir, err)
 			return
 		}
 	}

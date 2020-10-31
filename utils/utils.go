@@ -2,8 +2,6 @@ package utils
 
 import (
 	"bufio"
-	"bytes"
-	"encoding/gob"
 	"fmt"
 	"log"
 	"net"
@@ -15,15 +13,6 @@ import (
 
 //=============================================================================
 
-// DeepCopy - 深拷贝
-func DeepCopy(dst, src interface{}) error {
-	var buf bytes.Buffer
-	if err := gob.NewEncoder(&buf).Encode(src); err != nil {
-		return err
-	}
-	return gob.NewDecoder(bytes.NewBuffer(buf.Bytes())).Decode(dst)
-}
-
 // PWD - 当前运行路径
 func PWD() string {
 	path, err := os.Executable()
@@ -31,17 +20,6 @@ func PWD() string {
 		return ""
 	}
 	return filepath.Dir(path)
-}
-
-// EnsureDir - 创建目录
-func EnsureDir(dir string) (err error) {
-	if _, err = os.Stat(dir); os.IsNotExist(err) {
-		err = os.MkdirAll(dir, 0755)
-		if err != nil {
-			return
-		}
-	}
-	return
 }
 
 // EXEName - 当前程序名称

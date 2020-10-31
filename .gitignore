@@ -1,0 +1,9 @@
+.vscode
+/__debug_bin*
+/ivs-sms
+/ivs-sms.exe
+/ivs-sms.exe~
+/logs
+/*.db
+/*.zip
+/*.tar.gz

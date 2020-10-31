@@ -457,7 +457,7 @@ func (session *Session) Reconnect() {
 
 // handleResponse - 回应数据处理(拉流)
 func (session *Session) handleResponse(res *Response) {
-	log.Printf("\n>>>>>>----------------------------------------------------\n[%s : %s] %v", session.REQ.Method, session.SessionID, res)
+	log.Printf("\n>>>>>>----------------------------------------------------\n[%s : %s] %v", session.SessionID, session.REQ.Method, res)
 	ses := res.GetSessionInfo()
 	if id, ok := ses["id"]; ok {
 		session.SessionID = id
@@ -475,7 +475,7 @@ func (session *Session) handleResponse(res *Response) {
 		}
 		req.SetAuthorization(session.URL, session.Userinfo, session.Authenticate)
 		// 发送后续请求
-		log.Printf("\n<<<<<<----------------------------------------------------\n[%s : %s] %v", req.Method, session.SessionID, req)
+		log.Printf("\n<<<<<<----------------------------------------------------\n[%s : %s] %v", session.SessionID, req.Method, req)
 		outBytes := []byte(req.String())
 		session.connWLock.Lock()
 		session.connRW.Write(outBytes)
@@ -605,7 +605,7 @@ func (session *Session) handleRequest(req *Request) {
 	}
 	// 回应数据
 	session.REQ = req
-	log.Printf("\n>>>>>>----------------------------------------------------\n[%s : %s] %v", req.Method, session.SessionID, req)
+	log.Printf("\n>>>>>>----------------------------------------------------\n[%s : %s] %v", session.SessionID, req.Method, req)
 	res := NewResponse(200, "OK", req.Header["CSeq"], session.SessionID, "")
 	defer func() {
 		if p := recover(); p != nil {

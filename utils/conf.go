@@ -8,49 +8,45 @@ import (
 
 //=============================================================================
 var (
-	Conf     *ini.File
-	ConfFile string
-	Debug    bool
+	Conf  *ini.File
+	Debug bool
 )
+
+//=============================================================================
+// 包初始化
+func init() {
+	LoadConf()
+	Debug = Conf.Section("base").Key("debug").MustBool()
+}
 
 //=============================================================================
 
 // LoadConf - 获取配置参数
 func LoadConf() *ini.File {
-	if Conf != nil {
-		return Conf
+	cfile := filepath.Join(PWD(), "Conf.ini")
+	conf, err := ini.InsensitiveLoad(cfile)
+	if err != nil {
+		conf, _ = ini.LoadSources(ini.LoadOptions{Insensitive: true}, []byte(""))
 	}
-	ConfFile = filepath.Join(PWD(), "Conf.ini")
-	if _conf, err := ini.InsensitiveLoad(ConfFile); err != nil {
-		_conf, _ = ini.LoadSources(ini.LoadOptions{Insensitive: true}, []byte(""))
-		Conf = _conf
-	} else {
-		Conf = _conf
-	}
-	Debug = Conf.Section("base").Key("debug").MustBool()
-	return Conf
-}
-
-// ReloadConf - 重载配置文件
-func ReloadConf() *ini.File {
-	Conf = nil
-	return LoadConf()
+	Conf = conf
+	return conf
 }
 
 // SaveToConf - 保存配置文件
-func SaveToConf(section string, kvmap map[string]string) error {
-	var _conf *ini.File
+func SaveToConf(section string, kvmap map[string]string) (*ini.File, error) {
+	var conf *ini.File
 	var err error
-	if _conf, err = ini.InsensitiveLoad(ConfFile); err != nil {
-		if _conf, err = ini.LoadSources(ini.LoadOptions{Insensitive: true}, []byte("")); err != nil {
-			return err
+	cfile := filepath.Join(PWD(), "Conf.ini")
+	if conf, err = ini.InsensitiveLoad(cfile); err != nil {
+		if conf, err = ini.LoadSources(ini.LoadOptions{Insensitive: true}, []byte("")); err != nil {
+			return conf, err
 		}
 	}
-	sec := _conf.Section(section)
+	sec := conf.Section(section)
 	for k, v := range kvmap {
 		sec.Key(k).SetValue(v)
 	}
-	_conf.SaveTo(ConfFile)
-	Conf = _conf
-	return nil
+	conf.SaveTo(cfile)
+	Conf = conf
+	return conf, nil
 }

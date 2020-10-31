@@ -37,9 +37,6 @@ func (prog *program) Start(s service.Service) (err error) {
 	}
 	prog.StartRTSP()
 	prog.StartHTTP()
-	if !utils.Debug {
-		log.SetOutput(utils.GetLogger())
-	}
 	return
 }
 
@@ -135,18 +132,19 @@ func (prog *program) StopHTTP() (err error) {
 func main() {
 	// 日志配置
 	utils.LoadConf()
-	log.SetPrefix("[MLBVC] ")
+	log.SetPrefix("[IVS-SMS] ")
 	log.SetFlags(log.LstdFlags)
 	if utils.Debug {
 		log.SetFlags(log.Lshortfile | log.LstdFlags)
+		log.SetOutput(utils.GetLogger())
 	}
 
 	// 新建服务
 	sec := utils.Conf.Section("service")
 	svcConfig := &service.Config{
-		Name:        sec.Key("name").MustString("MLBVC_Service"),
-		DisplayName: sec.Key("display_name").MustString("MLBVC_Service"),
-		Description: sec.Key("description").MustString("MLBVC_Service"),
+		Name:        sec.Key("name").MustString(""),
+		DisplayName: sec.Key("display_name").MustString(""),
+		Description: sec.Key("description").MustString(""),
 	}
 	var srv, err = service.New(new(program), svcConfig)
 	if err != nil {

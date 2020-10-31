@@ -20,8 +20,8 @@ func GetLogger() io.Writer {
 	if rl != nil {
 		return rl
 	}
-	logPath := filepath.Join(PWD(), Conf.Section("base").Key("log_path").MustString("log"))
-	logFile := filepath.Join(logPath, strings.ToLower(EXEName())+"-%Y%m%d.log")
+	logPath := filepath.Join(PWD(), Conf.Section("base").Key("log_path").MustString("logs"))
+	logFile := filepath.Join(logPath, strings.ToLower("%Y%m%d.log"))
 	_rl, err := rotatelogs.New(logFile, rotatelogs.WithMaxAge(-1), rotatelogs.WithRotationCount(3))
 	if err == nil {
 		rl = _rl
